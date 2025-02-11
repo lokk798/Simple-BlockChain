@@ -9,7 +9,7 @@ class Blockchain:
     """
     A Class to represent a simple blockchain.
     """
-    def __init__(self, difficulty=4):
+    def __init__(self, difficulty=2):
         """
         Initializes the blockchain with an empty chain, sets the mining difficulty, and creates the genesis block.
         """

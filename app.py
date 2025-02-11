@@ -15,10 +15,17 @@ def home():
 def mine_block():
     """
     Flask route to mine a new block.
+    Includes difficulty level and mining time.
     """
     previous_block = blockchain.print_previous_block()
     previous_proof = previous_block['proof']
+    
+    start_time = time.time()  # Start timing
     proof = blockchain.proof_of_work(previous_proof)
+    end_time = time.time()  # End timing
+    
+    mining_time = round(end_time - start_time, 4)  # Time taken to mine
+    
     previous_hash = blockchain.hash(previous_block)
     block = blockchain.create_block(proof, previous_hash)
     
@@ -27,8 +34,11 @@ def mine_block():
         'index': block['index'],
         'timestamp': block['timestamp'],
         'proof': block['proof'],
-        'previous_hash': block['previous_hash']
+        'previous_hash': block['previous_hash'],
+        'difficulty': blockchain.difficulty,
+        'mining_time_seconds': mining_time
     }
+    
     return jsonify(response), 200
 
 @app.route('/get_chain', methods=['GET'])
